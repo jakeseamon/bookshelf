@@ -1,0 +1,6 @@
+languageCode = "en-us"
+title = "Jake Seamon Book Reviews"
+baseurl = "https://github.com/jakeseamon/jakeseamon.github.io/"
+
+[Params]
+  Author = "Jake Seamon"
