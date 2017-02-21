@@ -6,8 +6,98 @@
     <language>en-us</language>
     <author>Jake Seamon</author>
     <rights>(C) 2017</rights>
-    <updated>2017-02-21 13:28:35 -0500 EST</updated>
+    <updated>2017-02-21 18:15:18 -0500 EST</updated>
 
+    
+      
+        <item>
+          <title>sql_queries</title>
+          <link>https://jakeseamon.github.io/bookshelf/post/sql_queries/</link>
+          <pubDate>Tue, 21 Feb 2017 18:15:18 EST</pubDate>
+          <author>Jake Seamon</author>
+          <guid>https://jakeseamon.github.io/bookshelf/post/sql_queries/</guid>
+          <description>&lt;p&gt;CREATE TABLE IF NOT EXISTS client_info3 (
+    casenum FLOAT,
+    class CHAR(3),
+    state CHAR(3),
+    zipcode VARCHAR(5),
+    staff_6 CHAR(8),
+    staff_2 CHAR(8),
+    case_date_1 VARCHAR(10),
+    case_date_5 VARCHAR(10),
+    case_date_7 VARCHAR(10),
+    first_name CHAR(20),
+    email CHAR(100));&lt;/p&gt;
+
+&lt;p&gt;LOAD DATA INFILE &amp;lsquo;C:\client_info3.csv&amp;rsquo;
+INTO TABLE client_info3
+    FIELDS TERMINATED BY &amp;lsquo;,&amp;rsquo;
+            OPTIONALLY ENCLOSED BY &amp;lsquo;&amp;ldquo;&amp;rsquo;
+    LINES  TERMINATED BY &amp;lsquo;\r\n&amp;rsquo;
+(casenum, class, state, zipcode, staff_6, staff_2, case_date_1, case_date_5, case_date_7, first_name, email);&lt;/p&gt;
+
+&lt;p&gt;ALTER TABLE client_info3
+    ADD COLUMN client_key INT PRIMARY KEY AUTO_INCREMENT FIRST,
+    ADD COLUMN client_lat DECIMAL(10,7),
+    ADD COLUMN client_long DECIMAL(11,6);&lt;/p&gt;
+
+&lt;p&gt;ALTER TABLE client_info3
+    CHANGE COLUMN &lt;code&gt;state&lt;/code&gt; &lt;code&gt;client_state&lt;/code&gt; CHAR(3) NOT NULL;&lt;/p&gt;
+
+&lt;p&gt;ALTER TABLE client_info3
+    CHANGE COLUMN &lt;code&gt;zipcode&lt;/code&gt; &lt;code&gt;client_zip&lt;/code&gt; VARCHAR(5) NOT NULL;&lt;/p&gt;
+
+&lt;p&gt;UPDATE client_info3 as a
+JOIN zip_code as b
+ON a.client_zip = b.zip
+SET a.client_lat = b.latitude, a.client_long = b.longitude;&lt;/p&gt;
+
+&lt;p&gt;SET @file_var := CONCAT(
+&amp;ldquo;(SELECT &amp;lsquo;ID&amp;rsquo;, &amp;lsquo;Case_Number&amp;rsquo;, &amp;lsquo;case_date_1&amp;rsquo;, &amp;lsquo;case_date_5&amp;rsquo;, &amp;lsquo;case_date_7&amp;rsquo;, &amp;lsquo;Odar_Office&amp;rsquo;, &amp;lsquo;Other&amp;rsquo;, &amp;lsquo;Address&amp;rsquo;, &amp;lsquo;Address_Two&amp;rsquo;, &amp;lsquo;City&amp;rsquo;, &amp;lsquo;State&amp;rsquo;, &amp;lsquo;Zip_Code&amp;rsquo;, &amp;lsquo;Distance_in_Miles&amp;rsquo;)
+UNION
+(SELECT DISTINCT c.client_key as ID, c.casenum as &amp;lsquo;Case_Number&amp;rsquo;, c.case_date_1 as case_date_1, c.case_date_5 as case_date_5, c.case_date_7 as case_date_7, c.odar_name as &amp;lsquo;Odar_Office&amp;rsquo;, c.special as Other, c.odar_address as Address, c.odar_address2 as &amp;lsquo;Address_Two&amp;rsquo; , c.odar_city as City, c.odar_state as State, c.odar_zip as &amp;lsquo;Zip_Code&amp;rsquo;, c.distance as &amp;lsquo;Distance_in_Miles&amp;rsquo;
+FROM (
+    SELECT DISTINCT *, @distance_var := (
+        SELECT DISTINCT 69.0
+        * DEGREES(ACOS(COS(RADIANS(b.odar_lat))
+        * COS(RADIANS(a.client_lat))
+        * COS(RADIANS(b.odar_long) - RADIANS(a.client_long))
+        + SIN(RADIANS(b.odar_lat))
+        * SIN(RADIANS(a.client_lat))))
+        FROM client_info3
+        LIMIT 1) as distance
+    FROM client_info3 as a
+    JOIN odar_table as b
+    WHERE   a.client_lat
+            BETWEEN b.odar_lat - (200.0 / 69.0)
+                AND b.odar_lat + (200.0 / 69.0)
+        AND a.client_long
+            BETWEEN b.odar_long - (200.0 / (69.0 * COS(RADIANS(b.odar_lat))))
+                AND b.odar_long + (200.0 / (69.0 * COS(RADIANS(b.odar_lat))))
+        AND a.client_lat &amp;lt;&amp;gt; 0
+        AND a.client_long &amp;lt;&amp;gt; 0
+        AND b.odar_lat &amp;lt;&amp;gt; 0
+        AND b.odar_long &amp;lt;&amp;gt; 0
+    GROUP BY client_key, odar_key
+    ORDER BY client_key, distance) as c
+JOIN client_info3 as d
+ON c.client_key = d.client_key
+WHERE distance &amp;lt;= 200.0
+GROUP BY c.client_key
+ORDER BY c.client&lt;em&gt;key, c.distance
+INTO OUTFILE &amp;lsquo;C:\jake&lt;/em&gt;&amp;rdquo;, DATE&lt;em&gt;FORMAT(NOW(), &amp;lsquo;%m-%d-%y&lt;/em&gt;%h.%i.%s%p&amp;rsquo;), &amp;ldquo;.csv&amp;rsquo;
+FIELDS ENCLOSED BY &amp;lsquo;\&amp;ldquo;&amp;rsquo;
+TERMINATED BY &amp;lsquo;,&amp;rsquo;
+ESCAPED BY &amp;lsquo;\&amp;ldquo;&amp;rsquo;
+LINES TERMINATED BY &amp;lsquo;\r\n&amp;rsquo;)&amp;ldquo;);&lt;/p&gt;
+
+&lt;p&gt;PREPARE stmt FROM @file_var;
+EXECUTE stmt;&lt;/p&gt;
+
+&lt;p&gt;DROP TABLE IF EXISTS client_info3;&lt;/p&gt;
+</description>
+        </item>
+      
     
       
         <item>

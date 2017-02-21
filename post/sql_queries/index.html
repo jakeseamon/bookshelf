@@ -15,14 +15,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://jakeseamon.github.io/bookshelf//index.xml">
 
     
-    <title>Good to Great Book Review - Jake Seamon Book Reviews</title>
-    <meta property='og:title' content="Good to Great Book Review - Jake Seamon Book Reviews">
+    <title>sql_queries - Jake Seamon Book Reviews</title>
+    <meta property='og:title' content="sql_queries - Jake Seamon Book Reviews">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://jakeseamon.github.io/bookshelf/post/good-to-great/">
+    <meta property="og:url" content="https://jakeseamon.github.io/bookshelf/post/sql_queries/">
     
-    <meta property="og:image" content="https://jakeseamon.github.io/bookshelf/images/good-to-great.jpg">
+    
 
   </head>
 
@@ -42,12 +42,14 @@
       <article class="single" itemscope="itemscope" itemtype="http://schema.org/Article">
 
         <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="https://jakeseamon.github.io/bookshelf/"/>
-        <meta itemprop="dateModified" content="2017-02-21T13:28:35-05:00">
-        <meta itemprop="headline" content="Good to Great Book Review">
-        <meta itemprop="description" content="I read Good to Great in January 2016. An awesome read sharing detailed analysis on how good companies became great. Although this book is about how companies became great but we could apply a lot of the learnings on ourselves. Concepts like level 5 leader, hedgehog concept, the stockdale paradox are equally applicable to individuals.">
-        <meta itemprop="url" content="https://jakeseamon.github.io/bookshelf/post/good-to-great/">
+        <meta itemprop="dateModified" content="2017-02-21T18:15:18-05:00">
+        <meta itemprop="headline" content="sql_queries">
+        <meta itemprop="description" content="CREATE TABLE IF NOT EXISTS client_info3 ( casenum FLOAT, class CHAR(3), state CHAR(3), zipcode VARCHAR(5), staff_6 CHAR(8), staff_2 CHAR(8), case_date_1 VARCHAR(10), case_date_5 VARCHAR(10), case_date_7 VARCHAR(10), first_name CHAR(20), email CHAR(100));
+LOAD DATA INFILE &lsquo;C:\client_info3.csv&rsquo; INTO TABLE client_info3 FIELDS TERMINATED BY &lsquo;,&rsquo; OPTIONALLY ENCLOSED BY &lsquo;&ldquo;&rsquo; LINES TERMINATED BY &lsquo;\r\n&rsquo; (casenum, class, state, zipcode, staff_6, staff_2, case_date_1, case_date_5, case_date_7, first_name, email);
+ALTER TABLE client_info3 ADD COLUMN client_key INT PRIMARY KEY AUTO_INCREMENT FIRST, ADD COLUMN client_lat DECIMAL(10,7), ADD COLUMN client_long DECIMAL(11,6);">
+        <meta itemprop="url" content="https://jakeseamon.github.io/bookshelf/post/sql_queries/">
         <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <meta itemprop="url" content="https://jakeseamon.github.io/bookshelf/images/good-to-great.jpg" />
+          <meta itemprop="url" content="https://jakeseamon.github.io/bookshelf/images/default.jpg" />
           <meta itemprop="width" content="800">
           <meta itemprop="height" content="800">
         </div>
@@ -63,15 +65,93 @@
           <meta itemprop="name" content="Jake Seamon">
         </div>
 
-        <div class="image" style="background-image: url(https://jakeseamon.github.io/bookshelf/images/good-to-great.jpg);"></div>
+        <div class="image" style="background-image: url(https://jakeseamon.github.io/bookshelf/images/default.jpg);"></div>
 
         <header class="article-header">
-          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-02-21T13:28:35-05:00">Tue, Feb 21, 2017</time>
-          <h1 class="article-title">Good to Great Book Review</h1>
+          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-02-21T18:15:18-05:00">Tue, Feb 21, 2017</time>
+          <h1 class="article-title">sql_queries</h1>
         </header>
 
         <div class="article-body" itemprop="articleBody">
-          <p>I read <strong>Good to Great in January 2016</strong>. An awesome read sharing detailed analysis on how good companies became great. Although this book is about how companies became great but we could apply a lot of the learnings on ourselves. Concepts like level 5 leader, hedgehog concept, the stockdale paradox are equally applicable to individuals.</p>
+          <p>CREATE TABLE IF NOT EXISTS client_info3 (
+    casenum FLOAT,
+    class CHAR(3),
+    state CHAR(3),
+    zipcode VARCHAR(5),
+    staff_6 CHAR(8),
+    staff_2 CHAR(8),
+    case_date_1 VARCHAR(10),
+    case_date_5 VARCHAR(10),
+    case_date_7 VARCHAR(10),
+    first_name CHAR(20),
+    email CHAR(100));</p>
+
+<p>LOAD DATA INFILE &lsquo;C:\client_info3.csv&rsquo;
+INTO TABLE client_info3
+    FIELDS TERMINATED BY &lsquo;,&rsquo;
+            OPTIONALLY ENCLOSED BY &lsquo;&ldquo;&rsquo;
+    LINES  TERMINATED BY &lsquo;\r\n&rsquo;
+(casenum, class, state, zipcode, staff_6, staff_2, case_date_1, case_date_5, case_date_7, first_name, email);</p>
+
+<p>ALTER TABLE client_info3
+    ADD COLUMN client_key INT PRIMARY KEY AUTO_INCREMENT FIRST,
+    ADD COLUMN client_lat DECIMAL(10,7),
+    ADD COLUMN client_long DECIMAL(11,6);</p>
+
+<p>ALTER TABLE client_info3
+    CHANGE COLUMN <code>state</code> <code>client_state</code> CHAR(3) NOT NULL;</p>
+
+<p>ALTER TABLE client_info3
+    CHANGE COLUMN <code>zipcode</code> <code>client_zip</code> VARCHAR(5) NOT NULL;</p>
+
+<p>UPDATE client_info3 as a
+JOIN zip_code as b
+ON a.client_zip = b.zip
+SET a.client_lat = b.latitude, a.client_long = b.longitude;</p>
+
+<p>SET @file_var := CONCAT(
+&ldquo;(SELECT &lsquo;ID&rsquo;, &lsquo;Case_Number&rsquo;, &lsquo;case_date_1&rsquo;, &lsquo;case_date_5&rsquo;, &lsquo;case_date_7&rsquo;, &lsquo;Odar_Office&rsquo;, &lsquo;Other&rsquo;, &lsquo;Address&rsquo;, &lsquo;Address_Two&rsquo;, &lsquo;City&rsquo;, &lsquo;State&rsquo;, &lsquo;Zip_Code&rsquo;, &lsquo;Distance_in_Miles&rsquo;)
+UNION
+(SELECT DISTINCT c.client_key as ID, c.casenum as &lsquo;Case_Number&rsquo;, c.case_date_1 as case_date_1, c.case_date_5 as case_date_5, c.case_date_7 as case_date_7, c.odar_name as &lsquo;Odar_Office&rsquo;, c.special as Other, c.odar_address as Address, c.odar_address2 as &lsquo;Address_Two&rsquo; , c.odar_city as City, c.odar_state as State, c.odar_zip as &lsquo;Zip_Code&rsquo;, c.distance as &lsquo;Distance_in_Miles&rsquo;
+FROM (
+    SELECT DISTINCT *, @distance_var := (
+        SELECT DISTINCT 69.0
+        * DEGREES(ACOS(COS(RADIANS(b.odar_lat))
+        * COS(RADIANS(a.client_lat))
+        * COS(RADIANS(b.odar_long) - RADIANS(a.client_long))
+        + SIN(RADIANS(b.odar_lat))
+        * SIN(RADIANS(a.client_lat))))
+        FROM client_info3
+        LIMIT 1) as distance
+    FROM client_info3 as a
+    JOIN odar_table as b
+    WHERE   a.client_lat
+            BETWEEN b.odar_lat - (200.0 / 69.0)
+                AND b.odar_lat + (200.0 / 69.0)
+        AND a.client_long
+            BETWEEN b.odar_long - (200.0 / (69.0 * COS(RADIANS(b.odar_lat))))
+                AND b.odar_long + (200.0 / (69.0 * COS(RADIANS(b.odar_lat))))
+        AND a.client_lat &lt;&gt; 0
+        AND a.client_long &lt;&gt; 0
+        AND b.odar_lat &lt;&gt; 0
+        AND b.odar_long &lt;&gt; 0
+    GROUP BY client_key, odar_key
+    ORDER BY client_key, distance) as c
+JOIN client_info3 as d
+ON c.client_key = d.client_key
+WHERE distance &lt;= 200.0
+GROUP BY c.client_key
+ORDER BY c.client<em>key, c.distance
+INTO OUTFILE &lsquo;C:\jake</em>&rdquo;, DATE<em>FORMAT(NOW(), &lsquo;%m-%d-%y</em>%h.%i.%s%p&rsquo;), &ldquo;.csv&rsquo;
+FIELDS ENCLOSED BY &lsquo;\&ldquo;&rsquo;
+TERMINATED BY &lsquo;,&rsquo;
+ESCAPED BY &lsquo;\&ldquo;&rsquo;
+LINES TERMINATED BY &lsquo;\r\n&rsquo;)&ldquo;);</p>
+
+<p>PREPARE stmt FROM @file_var;
+EXECUTE stmt;</p>
+
+<p>DROP TABLE IF EXISTS client_info3;</p>
 
         </div>
 
@@ -80,10 +160,10 @@
           
 
           <div class="section share">
-            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fgood-to-great%2f&t=Good%20to%20Great%20Book%20Review" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
-            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fgood-to-great%2f&text=Good%20to%20Great%20Book%20Review&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
-            <a href="https://plus.google.com/share?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fgood-to-great%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
-            <a href="http://getpocket.com/edit?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fgood-to-great%2f&title=Good%20to%20Great%20Book%20Review" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
+            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fsql_queries%2f&t=sql_queries" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
+            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fsql_queries%2f&text=sql_queries&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
+            <a href="https://plus.google.com/share?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fsql_queries%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
+            <a href="http://getpocket.com/edit?url=https%3a%2f%2fjakeseamon.github.io%2fbookshelf%2fpost%2fsql_queries%2f&title=sql_queries" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
           </div>
 
           

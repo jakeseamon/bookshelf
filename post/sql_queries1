@@ -1,0 +1,8 @@
++++
+date = "2017-02-21T18:02:49-05:00"
+title = "sql_queries1"
+draft = true
+
++++
+
+SELECT * FROM table1;
