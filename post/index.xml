@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jake Seamon Book Reviews </title>
+    <link>https://github.com/jakeseamon/jakeseamon.github.io/post/index.xml</link>
+    <language>en-us</language>
+    <author>Jake Seamon</author>
+    <rights>(C) 2017</rights>
+    <updated>2017-02-21 13:28:35 -0500 EST</updated>
+
+    
+      
+        <item>
+          <title>Good to Great Book Review</title>
+          <link>https://github.com/jakeseamon/jakeseamon.github.io/post/good-to-great/</link>
+          <pubDate>Tue, 21 Feb 2017 13:28:35 EST</pubDate>
+          <author>Jake Seamon</author>
+          <guid>https://github.com/jakeseamon/jakeseamon.github.io/post/good-to-great/</guid>
+          <description>&lt;p&gt;I read &lt;strong&gt;Good to Great in January 2016&lt;/strong&gt;. An awesome read sharing detailed analysis on how good companies became great. Although this book is about how companies became great but we could apply a lot of the learnings on ourselves. Concepts like level 5 leader, hedgehog concept, the stockdale paradox are equally applicable to individuals.&lt;/p&gt;
+</description>
+        </item>
+      
+    
+
+  </channel>
+</rss>
